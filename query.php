@@ -29,25 +29,16 @@ if(isset($_POST['reg_user'])){
     $lastname=$_POST['lastname'];
     $firstname=$_POST['firstname'];
     $gender=$_POST['gender'];
-    $account=$_POST['account'];
-    $marital=$_POST['marital'];
-    $address=$_POST['address'];
     $dob=$_POST['dob'];
     $country=$_POST['country'];
     $pin=$_POST['pin'];
-    $occupation=$_POST['occupation'];
     $date=date("Y-m-d H:i:s");
-    $img=$_FILES['img']['name'];
-    $img_gov=$_FILES['img_gov']['name'];
     $amount=$_POST['amount'];
-    $q1=$_POST['q1']; 
-    $q2=$_POST['q2'];
-    $a1=$_POST['a1'];
-    $a2=$_POST['a2'];
     
     $username=trim($username);
     $username=strtolower($username);
-    
+    array_push($errors,"You email address is required");
+    return;
     if(empty($username)){array_push($errors, "Username is required");}
     if(empty($password)){array_push($errors,"Password is required");}
     if(empty($email)){array_push($errors,"You email address is required");}
@@ -88,11 +79,9 @@ if(isset($_POST['reg_user'])){
     }
     if (count($errors)==0){
     
-    $query="INSERT INTO registration (acct_num,firstname,lastname,occupation,amount,pin,acct_type,username,gender,dob,password,email,address,marital,img,img_gov,q1,a1,q2,a2,ip,country,date)
-    VALUES('$acct_num','$firstname','$lastname','$occupation','$amount','$pin','$account','$username','$gender','$dob','$password','$email','$address','$marital','$img','$img_gov','$q1','$a1','$q2','$a2','$ip','$country','$date')";
+    $query="INSERT INTO registration (acct_num,firstname,lastname,occupation,amount,pin,acct_type,username,gender,dob,password,email,address,marital,img,img_gov,ip,country,date)
+    VALUES('$acct_num','$firstname','$lastname','','$amount','$pin','$account','$username','$gender','$dob','$password','$email','$address','$marital','$img','$img_gov','$q1','$a1','$q2','$a2','$ip','$country','$date')";
     mysqli_query($db,$query);
-    move_uploaded_file($_FILES['img']['tmp_name'], 'users/' .$img);
-    move_uploaded_file($_FILES['img']['tmp_name'], 'users/' .$img_gov);
     
     
     if($query){
