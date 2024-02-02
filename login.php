@@ -1,12 +1,4 @@
- <?php include('query.php');
-if(isset($_SESSION['refer'])){
-  $refer=$_SESSION['refer'];
-  }else{
-  $refer="";
-  }
-  $_SESSION['refer']=$refer;
-  ?> 
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -34,10 +26,10 @@ if(isset($_SESSION['refer'])){
           <div class="flex flex-col items-center justify-between xl:flex-row">
             <div class="w-full max-w-xl mb-12 xl:mb-0 xl:pr-16 xl:w-5/12">
               <h2 class="max-w-lg mb-6  text-3xl md:text-6xl font-bold tracking-tight text-white sm:text-4xl sm:leading-none">
-                  Login
+                Login
               </h2>
               <p class="max-w-xl mb-4 text-base text-gray-200 md:text-lg">
-                "name" guarantees that all trades are carried out at the most
+                "name" guarantees that all transaction  are carried out at the most
                 favorable prices, complemented by comprehensive quotes, creating
                 a seamless and ideal experience for traders of any expertise
                 level.
@@ -46,104 +38,36 @@ if(isset($_SESSION['refer'])){
             <div class="w-full max-w-xl xl:px-8 xl:w-7/12">
               <div class="bg-white rounded shadow-2xl p-7 sm:p-10">
                 <h3 class="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
-                  Register
+                Login
                 </h3>
                 <div class="flex justify-center ">
                  
-                    <span class="text-center text-xl text-red-600 bold">
+                    <span class="text-center text-xl text-green-600 bold">
                       error
                     </span>
                 </div>
                 <form  >
                   
-
-                  <div class="flex justify-between space-x-2 ">
-                    <div class="mb-1 sm:mb-2">
-                      <label
-                        html-for="Firstname"
-                        class="inline-block mb-1 font-medium"
-                      >
-                        Firstname
-                      </label>
-                      <input
-                        placeholder="Firstname"
-                        required
-                        type="text"
-                        class="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-                        id="Firstname"
-                        name="Firstname"
-                      />
-                    </div>
-
-                    <div class="mb-1 sm:mb-2">
-                      <label
-                        html-for="referral"
-                        class="inline-block mb-1 font-medium"
-                      >
-                        Last Name
-                      </label>
-                      <input
-                        placeholder="Lastname"
-                        type="text"
-                        class="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-                        id="lastname"
-                        name="lastname"
-                      />
-                    </div>
-                  </div>
+ 
 
                   <div class="mb-1 sm:mb-2">
                     <label
-                      html-for="email"
+                      html-for="user_id"
                       class="inline-block mb-1 font-medium"
                     >
-                      E-mail
+                      User ID
                     </label>
                     <input
-                      placeholder="email@example.org"
+                      placeholder="User ID"
                       required
-                      type="email"
+                      type="text"
                       class="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-                      id="email"
-                      name="email"
+                      id="user_id"
+                      name="user_id"
                     />
                   </div>
 
-                  <div class="flex justify-between space-x-2 ">
-                    <div class="mb-1 sm:mb-2">
-                      <label
-                        html-for="userid"
-                        class="inline-block mb-1 font-medium"
-                      >
-                        User ID
-                      </label>
-                      <input
-                        placeholder="User ID"
-                        required
-                        type="text"
-                        class="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-                        id="username"
-                        name="username"
-                      />
-                    </div>
-
-                    <div class="mb-1 sm:mb-2">
-                      <label
-                        html-for="referral"
-                        class="inline-block mb-1 font-medium"
-                      >
-                        Referred By
-                      </label>
-                      <input
-                        placeholder="Referral User (Optional)"
-                        type="text"
-                        class="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-                        id="referral"
-                        name="referral"
-                      />
-                    </div>
-                  </div>
-              
+                   
 
                   <div class="mb-1 sm:mb-2">
                     <label
@@ -168,9 +92,9 @@ if(isset($_SESSION['refer'])){
                     > Sign Up</button>
                   </div>
                   <div class="text-center flex-wrap justify-center">
-                    <a href="/login">
+                    <a href="#">
                       <p class="py-4 text-xs text-gray-600 sm:text-sm">
-                        Already have an account? Login.
+                        Forgot Password? Reset.
                       </p>
                     </a>
                     <a href="/">

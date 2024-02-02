@@ -29,7 +29,7 @@
                 Register
               </h2>
               <p class="max-w-xl mb-4 text-base text-gray-200 md:text-lg">
-                "name" guarantees that all trades are carried out at the most
+              "name" guarantees that all transaction  are carried out at the most
                 favorable prices, complemented by comprehensive quotes, creating
                 a seamless and ideal experience for traders of any expertise
                 level.
