@@ -65,45 +65,19 @@ function register($conn) {
 
 			} else { 
 
-				$query = "INSERT INTO users (acct_type,address,amount,dp,verify,refer,occupation,ip,marital,pin,img,doctype,phone,acct_num,firstname,lastname,username,gender,passwords,email,country,dates) VALUES ('','','','','','','','','','','','','','".$acct_num."','".$firstname."','".$lastname."','".$username."','".$gender."','".$password."','".$email."','".$country."','".$date."')";
+				$query = "INSERT INTO users (acct_type,address,dp,verify,refer,occupation,ip,marital,pin,img,doctype,phone,amount,profit,acct_num,firstname,lastname,username,gender,passwords,email,country,dates) VALUES ('','','','','','','','','','','','',0,0,'".$acct_num."','".$firstname."','".$lastname."','".$username."','".$gender."','".$password."','".$email."','".$country."','".$date."')";
 				$result = mysqli_query($conn,$query);
 			
 				if ($result == true) {
-					// echo '<script>document.getElementById("info").innerHTML = "Successfully Registered!";</script>';
-	
+				 
 					echo  'Successfully Registered!';
 				} else {
 					echo 'Sorry, we couldn\'t register you this time. Please try again later.';
-					// echo  'Sorry, we couldn\'t register you this time. Please try again later.';
+
 				}
 			}
 	}
 }
-
-
-
-//logged in function
-function loggedin() {
-	if (isset($_COOKIE['Reg_num']) && isset($_COOKIE['password']) && isset($_SESSION['user_id'])) {
-		return true;
-	} else {
-		return false; 
-	}
-}
-
-//userId function
-function UserId($get) {
-	require 'conn.php';
-	$query = "SELECT '".$get."' FROM users WHERE `id`='".$_SESSION['user_id']."'";
-	 if ($data_query = mysqli_query($conn, $query)) {
-			$data_row = mysqli_fetch_row($data_query);
-			$data_count = $data_row[0];
-		if ($data_count == true) {
-			return $data_count;
-		}
-	}
-}
-	
 
 function login($conn){
 	if(isset($_POST['login_submit'])){
@@ -129,7 +103,7 @@ function login($conn){
 				echo '<span id="info" class="text-center text-xl text-green-600 bold">
 				Redirecting...
 				</span>';
-				$_SESSION['username'] = $_POST['username'];
+				$_SESSION['user_id'] = $_POST['username'];
 				$count = mysqli_fetch_row($login_query);
 				$user_username = $count[0];
 				
@@ -142,7 +116,6 @@ function login($conn){
 					//Redirect to profile page
 				header('refresh:2; url= dashboard.php?true='.sha1(rand()).'/');
 				
-				// header("refresh:2;url= admin.php");
 
 			}
 				
@@ -152,6 +125,54 @@ function login($conn){
 			
 	}
 }
+
+//logged in function
+function loggedin() {
+	if (isset($_COOKIE['user']) && isset($_COOKIE['password']) && isset($_SESSION['user_id'])) {
+		return true;
+	} else {
+		return false; 
+	}
+}
+
+//userId function
+// function UserId($get) {
+// 	require 'conn.php';
+// 	$query = "SELECT '".$get."' FROM users WHERE `id` = '".$_SESSION['user_username']."'";
+// 	$data_query = mysqli_query($conn, $query);
+// 	if ($data_query) {
+// 		$data_row = mysqli_fetch_row($data_query);
+// 		$data_count = $data_row[0];
+// 		return $data_count;
+// 	}
+// }
+	
+function UserId($get) {
+    require 'conn.php';
+
+    // Use backticks around column and table names
+    $query = "SELECT `$get` FROM users WHERE `id` = '".$_SESSION['user_username']."'";
+
+    $data_query = mysqli_query($conn, $query);
+    
+    if ($data_query) {
+        $data_row = mysqli_fetch_row($data_query);
+
+        // Check if the column exists
+        if (!empty($data_row)) {
+            $data_count = $data_row[0];
+            return $data_count;
+        } else {
+            // Handle the case where the column doesn't exist
+            return "Column not found";
+        }
+    } else {
+        // Handle the case where the query fails
+        return "Query failed: " . mysqli_error($conn);
+    }
+}
+
+
  
 ?>
 

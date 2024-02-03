@@ -1,15 +1,19 @@
-
 <?php
- 
+ require 'functions/query.php';
+$firstname = UserId('firstname');
+$lastname = UserId('lastname');
+$amount = UserId('amount'); 
+$profit = UserId('profit'); 
 
-if (isset($_GET['logout'])) {
-    session_destroy();
-    unset($_SESSION['username']);
-    header("location: adminlog.php");
-}
+  if (loggedin()==false) {
+     header('Location: functions/logout.php'); 
+  }
 
 
+  
  ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,13 +34,13 @@ if (isset($_GET['logout'])) {
     <link rel="stylesheet" href="https://ap.assetsgeniushub.com/assets/global/css/nice-select.css"/>
     <link rel="stylesheet" href="https://ap.assetsgeniushub.com/assets/global/css/datatables.min.css"/>
     <link rel="stylesheet" href="https://ap.assetsgeniushub.com/assets/global/css/simple-notify.min.css"/>
-        <link rel="stylesheet" type="text/css" href="https://ap.assetsgeniushub.com/assets/vendor/mckenziearts/laravel-notify/css/notify.css"/>        <link rel="stylesheet" href="https://ap.assetsgeniushub.com/assets/global/css/custom.css"/>
+    <link rel="stylesheet" type="text/css" href="https://ap.assetsgeniushub.com/assets/vendor/mckenziearts/laravel-notify/css/notify.css"/>        <link rel="stylesheet" href="https://ap.assetsgeniushub.com/assets/global/css/custom.css"/>
     <link rel="stylesheet" href="https://ap.assetsgeniushub.com/assets/frontend/css/magnific-popup.css"/>
-            <link rel="stylesheet" href="https://ap.assetsgeniushub.com/assets/frontend/css/aos.css"/>
-        <link rel="stylesheet" href="https://ap.assetsgeniushub.com/assets/frontend/css/styles.css?var=2.1"/>
+    <link rel="stylesheet" href="https://ap.assetsgeniushub.com/assets/frontend/css/aos.css"/>
+    <link rel="stylesheet" href="https://ap.assetsgeniushub.com/assets/frontend/css/styles.css?var=2.1"/>
 
     <style>
-        //The Custom CSS will be added on the site head tag 
+
 .site-head-tag {
 	margin: 0;
   	padding: 0;
@@ -59,7 +63,7 @@ if (isset($_GET['logout'])) {
     <!--Header-->
     <div class="panel-header">
     <div class="logo">
-        <a href="https://ap.assetsgeniushub.com">
+        <a href="#">
             <img class="logo-unfold" src="https://ap.assetsgeniushub.com/assets/global/images/DCysJS7bhCshvD1yakcU.png" alt="Logo"/>
             <img class="logo-fold" src="https://ap.assetsgeniushub.com/assets/global/images/DCysJS7bhCshvD1yakcU.png" alt="Logo"/>
         </a>
@@ -70,7 +74,7 @@ if (isset($_GET['logout'])) {
                 <i class="anticon anticon-arrow-left"></i>
             </button>
             <div class="mob-logo">
-                <a href="https://ap.assetsgeniushub.com">
+                <a href="#">
                     <img src="https://ap.assetsgeniushub.com/assets/global/images/DCysJS7bhCshvD1yakcU.png" alt="Site Name"/>
                 </a>
             </div>
@@ -109,10 +113,7 @@ if (isset($_GET['logout'])) {
                             onchange="window.location.href=this.options[this.selectedIndex].value;">
                                                     <option
                                 value="https://ap.assetsgeniushub.com/language-update?name=en" selected>English</option>
-                                                    <option
-                                value="https://ap.assetsgeniushub.com/language-update?name=es" >Spanish</option>
-                                                    <option
-                                value="https://ap.assetsgeniushub.com/language-update?name=fr" >Franch</option>
+                                                     
                                             </select>
                 </div>
                 <div class="single-right">
@@ -126,25 +127,24 @@ if (isset($_GET['logout'])) {
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <a href="https://ap.assetsgeniushub.com/user/settings" class="dropdown-item" type="button"><i
+                            <a href="#" class="dropdown-item" type="button"><i
                                     class="anticon anticon-setting"></i>Settings</a>
                         </li>
                         <li>
-                            <a href="https://ap.assetsgeniushub.com/user/change-password" class="dropdown-item" type="button">
+                            <a href="#" class="dropdown-item" type="button">
                                 <i class="anticon anticon-lock"></i>Change Password
                             </a>
                         </li>
-                        <li>
-                            <a href="https://ap.assetsgeniushub.com/user/support-ticket/index" class="dropdown-item" type="button">
+                        <!-- <li>
+                            <a href="#" class="dropdown-item" type="button">
                                 <i class="anticon anticon-customer-service"></i>Support Tickets
                             </a>
-                        </li>
+                        </li> -->
                         <li class="logout">
-                            <form method="POST" action="https://ap.assetsgeniushub.com/logout" id="logout-form">
-                                <input type="hidden" name="_token" value="nrjeRPslUBjQXOTV2JqGxE5YPWPXEHHn3bkf2dw5">                                <a href="https://ap.assetsgeniushub.com/logout" class="dropdown-item"
-                                   onclick="event.preventDefault(); localStorage.clear();  $('#logout-form').submit();"><i
+
+                            <a href="functions/logout.php" class="dropdown-item"><i
                                         class="anticon anticon-logout"></i>Logout</a>
-                            </form>
+
                         </li>
                     </ul>
                 </div>
@@ -164,93 +164,85 @@ if (isset($_GET['logout'])) {
             </div>
             <div class="wallet-info">
                 <div class="wallet-id"><i icon-name="wallet"></i>Main Wallet</div>
-                <div class="balance">$0.00</div>
+                <div class="balance">$   <?php echo $amount ?></div>
             </div>
             <div class="wallet-info">
                 <div class="wallet-id"><i icon-name="landmark"></i>Profit Wallet</div>
-                <div class="balance">$10.00</div>
+                <div class="balance">$   <?php echo $profit ?></div>
             </div>
         </div>
         <div class="actions">
-            <a href="https://ap.assetsgeniushub.com/user/deposit" class="user-sidebar-btn"><i
+            <a href="#" class="user-sidebar-btn"><i
                     class="anticon anticon-file-add"></i>Deposit</a>
-            <a href="https://ap.assetsgeniushub.com/user/schemas" class="user-sidebar-btn red-btn"><i
+            <a href="#" class="user-sidebar-btn red-btn"><i
                     class="anticon anticon-export"></i>Invest Now</a>
         </div>
     </div>
     <div class="side-nav-inside">
         <ul class="side-nav-menu">
             <li class="side-nav-item active">
-                <a href="https://ap.assetsgeniushub.com/user/dashboard"><i
+                <a href="#"><i
                         class="anticon anticon-appstore"></i><span>Dashboard</span></a>
             </li>
 
-            <li class="side-nav-item ">
-                <a href="https://ap.assetsgeniushub.com/user/schemas"><i
+            <!-- <li class="side-nav-item ">
+                <a href="#"><i
                         class="anticon anticon-check-square"></i><span>All Schema</span></a>
-            </li>
-            <li class="side-nav-item ">
-                <a href="https://ap.assetsgeniushub.com/user/invest-logs"><i
+            </li> -->
+            <!-- <li class="side-nav-item ">
+                <a href="#"><i
                         class="anticon anticon-copy"></i><span>Schema Logs</span></a>
-            </li>
+            </li> -->
 
             <li class="side-nav-item ">
-                <a href="https://ap.assetsgeniushub.com/user/transactions"><i
-                        class="anticon anticon-inbox"></i><span>All Transactions</span></a>
+                <a href="#"><i
+                        class="anticon anticon-inbox"></i><span>Pending Transactions</span></a>
             </li>
 
 
             <li class="side-nav-item   ">
-                <a href="https://ap.assetsgeniushub.com/user/deposit"><i
+                <a href="#"><i
                         class="anticon anticon-file-add"></i><span>Add Money</span></a>
             </li>
             <li class="side-nav-item ">
-                <a href="https://ap.assetsgeniushub.com/user/deposit/log"><i
+                <a href="#"><i
                         class="anticon anticon-folder-add"></i><span>Add Money Log</span></a>
             </li>
 
             <li class="side-nav-item ">
-                <a href="https://ap.assetsgeniushub.com/user/wallet-exchange"><i
+                <a href="#"><i
                         class="anticon anticon-transaction"></i><span>Wallet Exchange</span></a>
             </li>
 
             <li class="side-nav-item   ">
-                <a href="https://ap.assetsgeniushub.com/user/send-money"><i
+                <a href="#"><i
                         class="anticon anticon-export"></i><span>Send Money</span></a>
             </li>
             <li class="side-nav-item ">
-                <a href="https://ap.assetsgeniushub.com/user/send-money/log"><i
+                <a href="#"><i
                         class="anticon anticon-cloud"></i><span>Send Money Log</span></a>
             </li>
 
             <li class="side-nav-item   ">
-                <a href="https://ap.assetsgeniushub.com/user/withdraw"><i
+                <a href="#"><i
                         class="anticon anticon-bank"></i><span>Withdraw</span></a>
             </li>
             <li class="side-nav-item ">
-                <a href="https://ap.assetsgeniushub.com/user/withdraw/log"><i
+                <a href="#"><i
                         class="anticon anticon-credit-card"></i><span>Withdraw Log</span></a>
             </li>
 
-            <li class="side-nav-item ">
-                <a href="https://ap.assetsgeniushub.com/user/ranking-badge"><i
+            <!-- <li class="side-nav-item ">
+                <a href="#"><i
                         class="anticon anticon-star"></i><span>Ranking Badge</span></a>
-            </li>
+            </li> -->
 
                             <li class="side-nav-item ">
                     <a href="https://ap.assetsgeniushub.com/user/referral"><i
                             class="anticon anticon-usergroup-add"></i><span>Referral</span></a>
                 </li>
             
-            <li class="side-nav-item ">
-                <a href="https://ap.assetsgeniushub.com/user/settings"><i
-                        class="anticon anticon-setting"></i><span>Settings</span></a>
-            </li>
-            <li class="side-nav-item ">
-                <a href="https://ap.assetsgeniushub.com/user/support-ticket/index"
-                ><i class="anticon anticon-tool"></i><span>Support Tickets</span></a
-                >
-            </li>
+             
 
             <li class="side-nav-item ">
                 <a href="https://ap.assetsgeniushub.com/user/notification/all"
@@ -260,11 +252,11 @@ if (isset($_GET['logout'])) {
 
             <li class="side-nav-item">
                 <!-- Authentication -->
-                <form method="POST" action="https://ap.assetsgeniushub.com/logout">
-                    <input type="hidden" name="_token" value="nrjeRPslUBjQXOTV2JqGxE5YPWPXEHHn3bkf2dw5">                    <button type="submit" class="site-btn grad-btn w-100">
+
+              <a href="functions/logout.php" class="dropdown-item">
                         <i class="anticon anticon-logout"></i><span>Logout</span>
-                    </button>
-                </form>
+</a>
+
             </li>
         </ul>
     </div>
@@ -319,7 +311,7 @@ if (isset($_GET['logout'])) {
         <div class="single">
             <div class="icon"><i class="anticon anticon-inbox"></i></div>
             <div class="content">
-                <h4><span class="count">3</span></h4>
+                <h4><span class="count">0</span></h4>
                 <p>All Transactions</p>
             </div>
         </div>
@@ -346,7 +338,7 @@ if (isset($_GET['logout'])) {
         <div class="single">
             <div class="icon"><i class="anticon anticon-credit-card"></i></div>
             <div class="content">
-                <h4><b>$</b><span class="count">10</span></h4>
+                <h4><b>$</b><span class="count">0</span></h4>
                 <p>Total Profit</p>
             </div>
         </div>
@@ -449,7 +441,7 @@ if (isset($_GET['logout'])) {
                         </tr>
                         </thead>
                         <tbody>
-                                                    <tr>
+                            <!-- <tr>
                                 <td>
                                     <div class="table-description">
                                         <div class="icon">
@@ -481,77 +473,8 @@ if (isset($_GET['logout'])) {
                                                                             <div class="site-badge warnning">Pending</div>
                                                                     </td>
                                 <td><strong>BTC</strong></td>
-                            </tr>
-                                                    <tr>
-                                <td>
-                                    <div class="table-description">
-                                        <div class="icon">
-                                            <i icon-name="backpack
-                                         ">
-                                            </i>
-                                        </div>
-
-
-                                        <div class="description">
-                                            <strong>Deposit With BITCOIN                                             </strong>
-                                            <div class="date">Jan 17 2024 02:33</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td><strong>TRXE5ZLSK0YSZ</strong></td>
-                                <td>
-                                    <div
-                                        class="site-badge primary-bg">Manual deposit</div>
-                                </td>
-
-                                <td><strong
-                                        class="green-color">+1000 USD</strong>
-                                </td>
-                                <td><strong>50 USD</strong></td>
-                                <td>
-
-
-                                                                            <div class="site-badge warnning">Pending</div>
-                                                                    </td>
-                                <td><strong>BTC</strong></td>
-                            </tr>
-                                                    <tr>
-                                <td>
-                                    <div class="table-description">
-                                        <div class="icon">
-                                            <i icon-name="backpack
-                                         ">
-                                            </i>
-                                        </div>
-
-
-                                        <div class="description">
-                                            <strong>Signup Bonus                                             </strong>
-                                            <div class="date">Jan 16 2024 11:40</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td><strong>TRXW9DQETSDKR</strong></td>
-                                <td>
-                                    <div
-                                        class="site-badge primary-bg">Signup bonus</div>
-                                </td>
-
-                                <td><strong
-                                        class="">10 USD</strong>
-                                </td>
-                                <td><strong>0 USD</strong></td>
-                                <td>
-
-
-                                                                            <div class="site-badge success">Success</div>
-                                                                    </td>
-                                <td><strong>System</strong></td>
-                            </tr>
-                        
-
-                                                </tbody>
-                    </table>
+                            </tr> -->
+                         </table>
                 </div>
             </div>
         </div>
@@ -566,7 +489,7 @@ if (isset($_GET['logout'])) {
         <div class="user-ranking-mobile">
             <div class="icon"><img src="https://ap.assetsgeniushub.com/assets/global/materials/user.png" alt=""/></div>
             <div class="name">
-                <h4>Hi, Candice Suber</h4>
+                <h4>Hi,  <?php  echo $firstname ," ", $lastname;?></h4>
                 <p>Asset Member - <span>Level 1</span></p>
             </div>
             <div class="rank-badge"><img src="https://ap.assetsgeniushub.com/assets/global/images/sCQgIyl0OKzFiO73nmWF.svg" alt=""/></div>
@@ -577,8 +500,9 @@ if (isset($_GET['logout'])) {
             <div class="one">
                 <div class="balance">
 
-                    <span class="symbol">$</span>0<span
-                        class="after-dot">.00 </span>
+                    <span class="symbol">$ </span><?php echo $amount ?>
+                    <!-- <span
+                        class="after-dot">.00 </span> -->
                 </div>
                 <div class="wallet">Main Wallet</div>
             </div>
@@ -586,22 +510,23 @@ if (isset($_GET['logout'])) {
 
             <div class="one p-wal">
                 <div class="balance">
-                    <span class="symbol">$</span>10.00<span
-                        class="after-dot">.00 </span>
+                    <span class="symbol">$ </span><?php echo $profit ?>
+                    <!-- <span
+                        class="after-dot">.00 </span> -->
                 </div>
                 <div class="wallet">Profit Wallet</div>
             </div>
             <div class="info">
-                <i icon-name="info"></i>You Earned 10 USD This Week
+                <i icon-name="info"></i>You Earned <?php echo $profit ?> USD This Week
             </div>
         </div>
     </div>
 
     <div class="col-12">
         <div class="mob-shortcut-btn">
-            <a href="https://ap.assetsgeniushub.com/user/deposit"><i icon-name="download"></i> Deposit</a>
-            <a href="https://ap.assetsgeniushub.com/user/schemas"><i icon-name="box"></i> Investment</a>
-            <a href="https://ap.assetsgeniushub.com/user/withdraw"><i icon-name="send"></i> Withdraw</a>
+            <a href="#"><i icon-name="download"></i> Deposit</a>
+            <a href="#"><i icon-name="box"></i> Investment</a>
+            <a href="#"><i icon-name="send"></i> Withdraw</a>
         </div>
     </div>
 
@@ -613,7 +538,7 @@ if (isset($_GET['logout'])) {
     <div class="contents row">
         <div class="col-4">
             <div class="single">
-                <a href="https://ap.assetsgeniushub.com/user/schemas">
+                <a href="#">
                     <div class="icon"><img src="https://ap.assetsgeniushub.com/assets/frontend/materials/schema.png" alt="">
                     </div>
                     <div class="name">Schemas</div>
@@ -622,7 +547,7 @@ if (isset($_GET['logout'])) {
         </div>
         <div class="col-4">
             <div class="single">
-                <a href="https://ap.assetsgeniushub.com/user/invest-logs">
+                <a href="#">
                     <div class="icon"><img src="https://ap.assetsgeniushub.com/assets/frontend/materials/schema-log.png" alt="">
                     </div>
                     <div class="name">Investment</div>
@@ -631,7 +556,7 @@ if (isset($_GET['logout'])) {
         </div>
         <div class="col-4">
             <div class="single">
-                <a href="https://ap.assetsgeniushub.com/user/transactions">
+                <a href="#">
                     <div class="icon"><img src="https://ap.assetsgeniushub.com/assets/frontend/materials/transactions.png" alt="">
                     </div>
                     <div class="name">Transactions</div>
@@ -640,7 +565,7 @@ if (isset($_GET['logout'])) {
         </div>
         <div class="col-4">
             <div class="single">
-                <a href="https://ap.assetsgeniushub.com/user/deposit">
+                <a href="#">
                     <div class="icon"><img src="https://ap.assetsgeniushub.com/assets/frontend/materials/deposit.png" alt="">
                     </div>
                     <div class="name">Deposit</div>
@@ -649,7 +574,7 @@ if (isset($_GET['logout'])) {
         </div>
         <div class="col-4">
             <div class="single">
-                <a href="https://ap.assetsgeniushub.com/user/deposit/log">
+                <a href="#">
                     <div class="icon"><img src="https://ap.assetsgeniushub.com/assets/frontend/materials/deposit-log.png" alt="">
                     </div>
                     <div class="name">Deposit Log</div>
@@ -658,7 +583,7 @@ if (isset($_GET['logout'])) {
         </div>
         <div class="col-4">
             <div class="single">
-                <a href="https://ap.assetsgeniushub.com/user/wallet-exchange">
+                <a href="#">
                     <div class="icon"><img src="https://ap.assetsgeniushub.com/assets/frontend/materials/wallet-exchange.png"
                                            alt="">
                     </div>
@@ -671,7 +596,7 @@ if (isset($_GET['logout'])) {
         <div class="row contents">
             <div class="col-4">
                 <div class="single">
-                    <a href="https://ap.assetsgeniushub.com/user/send-money">
+                    <a href="#">
                         <div class="icon"><img src="https://ap.assetsgeniushub.com/assets/frontend/materials/transfer.png"
                                                alt="">
                         </div>
@@ -681,7 +606,7 @@ if (isset($_GET['logout'])) {
             </div>
             <div class="col-4">
                 <div class="single">
-                    <a href="https://ap.assetsgeniushub.com/user/send-money/log">
+                    <a href="#">
                         <div class="icon"><img src="https://ap.assetsgeniushub.com/assets/frontend/materials/transfer-log.png"
                                                alt="">
                         </div>
@@ -691,7 +616,7 @@ if (isset($_GET['logout'])) {
             </div>
             <div class="col-4">
                 <div class="single">
-                    <a href="https://ap.assetsgeniushub.com/user/withdraw">
+                    <a href="#">
                         <div class="icon"><img src="https://ap.assetsgeniushub.com/assets/frontend/materials/withdraw.png"
                                                alt="">
                         </div>
@@ -701,7 +626,7 @@ if (isset($_GET['logout'])) {
             </div>
             <div class="col-4">
                 <div class="single">
-                    <a href="https://ap.assetsgeniushub.com/user/withdraw/log">
+                    <a href="#">
                         <div class="icon"><img src="https://ap.assetsgeniushub.com/assets/frontend/materials/withdraw-log.png"
                                                alt="">
                         </div>
@@ -711,7 +636,7 @@ if (isset($_GET['logout'])) {
             </div>
             <div class="col-4">
                 <div class="single">
-                    <a href="https://ap.assetsgeniushub.com/user/ranking-badge">
+                    <a href="#">
                         <div class="icon"><img src="https://ap.assetsgeniushub.com/assets/frontend/materials/ranking.png"
                                                alt="">
                         </div>
@@ -721,7 +646,7 @@ if (isset($_GET['logout'])) {
             </div>
             <div class="col-4">
                 <div class="single">
-                    <a href="https://ap.assetsgeniushub.com/user/referral">
+                    <a href="#">
                         <div class="icon"><img src="https://ap.assetsgeniushub.com/assets/frontend/materials/referral.png"
                                                alt="">
                         </div>
@@ -731,7 +656,7 @@ if (isset($_GET['logout'])) {
             </div>
             <div class="col-4">
                 <div class="single">
-                    <a href="https://ap.assetsgeniushub.com/user/settings">
+                    <a href="#">
                         <div class="icon"><img src="https://ap.assetsgeniushub.com/assets/frontend/materials/settings.png"
                                                alt="">
                         </div>
@@ -739,16 +664,7 @@ if (isset($_GET['logout'])) {
                     </a>
                 </div>
             </div>
-            <div class="col-4">
-                <div class="single">
-                    <a href="https://ap.assetsgeniushub.com/user/support-ticket/index">
-                        <div class="icon"><img src="https://ap.assetsgeniushub.com/assets/frontend/materials/support-ticket.png"
-                                               alt="">
-                        </div>
-                        <div class="name">Support Ticket</div>
-                    </a>
-                </div>
-            </div>
+<!--            
             <div class="col-4">
                 <div class="single">
                     <a href="https://ap.assetsgeniushub.com/user/notification/all">
@@ -758,7 +674,7 @@ if (isset($_GET['logout'])) {
                         <div class="name">Notifications</div>
                     </a>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="centered">
@@ -777,8 +693,8 @@ if (isset($_GET['logout'])) {
                         <div class="single-card">
                             <div class="icon"><i icon-name="arrow-left-right"></i></div>
                             <div class="content">
-                                <div class="amount count">3</div>
-                                <div class="name">All Transactions</div>
+                                <div class="amount count">30</div>
+                                <div class="name">Pending Transactions</div>
                             </div>
                         </div>
                     </div>
@@ -787,7 +703,7 @@ if (isset($_GET['logout'])) {
                             <div class="icon"><i icon-name="download"></i></div>
                             <div class="content">
                                 <div class="amount">$<span
-                                        class="count">0</span>
+                                        class="count"><?php echo $amount;?></span>
                                 </div>
                                 <div class="name">Total Deposit</div>
                             </div>
@@ -798,7 +714,7 @@ if (isset($_GET['logout'])) {
                             <div class="icon"><i icon-name="box"></i></div>
                             <div class="content">
                                 <div class="amount">$<span
-                                        class="count">0</span>
+                                        class="count"><?php echo $amount;?></span>
                                 </div>
                                 <div class="name">Total Investment</div>
                             </div>
@@ -812,7 +728,7 @@ if (isset($_GET['logout'])) {
                                 <div class="icon"><i icon-name="credit-card"></i></div>
                                 <div class="content">
                                     <div class="amount"> $<span
-                                            class="count">10</span>
+                                            class="count"><?php echo $profit;?></span>
                                     </div>
                                     <div class="name">Total Profit</div>
                                 </div>
@@ -963,14 +879,11 @@ if (isset($_GET['logout'])) {
                     </div>
                 </div>
                 <div class="transaction-right">
-                    <div class="transaction-amount ">
-                        10 USD</div>
+                    <div class="transaction-amount ">10 USD</div>
                     <div class="transaction-fee sub">-0 USD Fee </div>
                     <div class="transaction-gateway">System</div>
-
-
-                                            <div class="transaction-status success">Success</div>
-                                    </div>
+                    <div class="transaction-status success">Success</div>
+                 </div>
             </div>
             </div>
 </div>

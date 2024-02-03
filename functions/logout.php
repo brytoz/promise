@@ -11,7 +11,7 @@ if (ini_get("session.use_cookies")) {
 }
 unset($_SESSION['login']);
 session_destroy(); // destroy session
-header('refresh:0;url= index.php');
+header('refresh:0;url= ../login.php');
 
 ?>
 

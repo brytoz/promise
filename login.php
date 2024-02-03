@@ -102,6 +102,11 @@ require('functions/query.php');
                         Forgot Password? Reset.
                       </p>
                     </a>
+                    <a href="registration.php" class="pb-3">
+                      <p class="text-xs text-gray-600 sm:text-sm cursor-pointer ">
+                        Register
+                      </p>
+                    </a>
                     <a href="/">
                       <p class="text-xs text-gray-600 sm:text-sm cursor-pointer ">
                         Home
