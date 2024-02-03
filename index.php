@@ -1,6 +1,15 @@
+
 <?php
+ 
+
+if (isset($_GET['logout'])) {
+    session_destroy();
+    unset($_SESSION['username']);
+    header("location: adminlog.php");
+}
 
 
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

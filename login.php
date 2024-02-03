@@ -1,3 +1,6 @@
+<?php 
+require('functions/query.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,15 +43,16 @@
                 <h3 class="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                 Login
                 </h3>
-                <div class="flex justify-center ">
-                 
-                    <span class="text-center text-xl text-green-600 bold">
-                      error
-                    </span>
-                </div>
-                <form  >
-                  
- 
+                
+                <?php                  
+    echo '<form action="'.login($conn).'"  method="POST"  >'; ?>
+            
+            <div class="flex justify-center ">
+              
+              <span id="info" class="text-center text-xl text-green-600 bold">
+
+              </span>
+            </div>
 
                   <div class="mb-1 sm:mb-2">
                     <label
@@ -62,8 +66,8 @@
                       required
                       type="text"
                       class="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-                      id="user_id"
-                      name="user_id"
+                      id="username"
+                      name="username"
                     />
                   </div>
 
@@ -71,7 +75,7 @@
 
                   <div class="mb-1 sm:mb-2">
                     <label
-                      html-for="Passcode"
+                      html-for="password"
                       class="inline-block mb-1 font-medium"
                     >
                       Passcode
@@ -79,17 +83,18 @@
                     <input
                       placeholder="********"
                       required
-                      type="text"
+                      type="password"
                       class="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-                      id="lastName"
-                      name="lastName"
+                      id="password"
+                      name="password"
                     />
                   </div>
                   <div class="mt-4 mb-2 sm:mb-4">
                     <button
                       type="submit"
+                      name="login_submit"
                       class="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md  bg-gradient-to-r from-[#003049]/70  via-[#003049]/80 to-[#003049]  bg-opacity-75 only:bg-opacity-75 focus:shadow-outline focus:outline-none hover:bg-[#003049]/90"
-                    > Sign Up</button>
+                    > Login</button>
                   </div>
                   <div class="text-center flex-wrap justify-center">
                     <a href="#">
